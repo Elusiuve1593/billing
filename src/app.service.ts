@@ -19,7 +19,7 @@ export class AppService {
           ),
         );
     } catch (err) {
-      throw new Error('Somethimg went wrong... ', err);
+      throw new Error(`Something went wrong: ${err.message}`);
     }
   }
 }
