@@ -8,17 +8,18 @@ export class AppService {
   constructor(
     @Inject('AUTH_SERVICE') private readonly authClient: ClientKafka,
   ) {}
-  getHello(): string {
-    return 'Hello World!';
-  }
 
   handleOrderCreated({ userId, price }: OrderCreatedEvent) {
-    this.authClient
-      .send('get_user', new GetUserRequest(userId))
-      .subscribe((user) =>
-        console.log(
-          `Billing user with stripe ID ${user.stripeUserId} a price of $${price}`,
-        ),
-      );
+    try {
+      this.authClient
+        .send('get_user', new GetUserRequest(userId))
+        .subscribe((user) =>
+          console.log(
+            `Billing user with stripe ID ${user.stripeUserId} a price of $${price}`,
+          ),
+        );
+    } catch (err) {
+      throw new Error('Somethimg went wrong... ', err);
+    }
   }
 }

@@ -10,11 +10,6 @@ export class AppController implements OnModuleInit {
     @Inject('AUTH_SERVICE') private readonly authClient: ClientKafka,
   ) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
   @EventPattern('order_created')
   handleOrderCreated(data: OrderCreatedEvent) {
     this.appService.handleOrderCreated(data);
